@@ -39,6 +39,7 @@ module.exports = app => {
       baseBranch: process.env.BASE_BRANCH,
       id: action,
       pushToken: process.env.PUSH_TOKEN,
+      cargo: process.env.CARGO_PATH,
       extra: extra,
     }
 

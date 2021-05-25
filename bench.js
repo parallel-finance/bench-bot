@@ -74,6 +74,7 @@ const prepareBranch = function(
   }
 ) {
   shell.mkdir("git")
+  shell.cd(cwd + "/git")
   benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
   shell.cd(cwd + `/git/${repo}`);
 
@@ -142,7 +143,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
         branchCommand: [
             'cargo run --release',
             '--features=runtime-benchmarks',
-            '--manifest-path=bin/node/cli/Cargo.toml',
+            '--bin parallel-dev',
             '--',
             'benchmark',
             '--chain=dev',
@@ -153,7 +154,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--execution=wasm',
             '--wasm-execution=compiled',
             '--heap-pages=4096',
-            '--output=./frame/{pallet_folder}/src/weights.rs',
+            '--output=./pallets/{pallet_folder}/src/weights.rs',
             '--template=./.maintain/frame-weight-template.hbs',
         ].join(' '),
     },
@@ -162,7 +163,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
         branchCommand: [
             'cargo run --release',
             '--features=runtime-benchmarks',
-            '--manifest-path=bin/node/cli/Cargo.toml',
+            '--bin parallel-dev',
             '--',
             'benchmark',
             '--chain=dev',
@@ -173,7 +174,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--execution=wasm',
             '--wasm-execution=compiled',
             '--heap-pages=4096',
-            '--output=./frame/{pallet_folder}/src/weights.rs',
+            '--output=./pallets/{pallet_folder}/src/weights.rs',
             '--template=./.maintain/frame-weight-template.hbs',
         ].join(' '),
     },
@@ -302,7 +303,7 @@ async function benchmarkRuntime(app, config) {
         let command = config.extra.split(" ")[0];
 
         var benchConfig;
-        if (config.repo == "substrate") {
+        if (config.repo == "parallel") {
             benchConfig = SubstrateRuntimeBenchmarkConfigs[command];
         } else if (config.repo == "polkadot") {
             benchConfig = PolkadotRuntimeBenchmarkConfigs[command];
@@ -322,6 +323,7 @@ async function benchmarkRuntime(app, config) {
             // extra here should just be raw arguments to add to the command
             branchCommand += " " + extra;
         } else {
+            branchCommand = branchCommand.replace("cargo", config.cargo);
             // extra here should be the name of a pallet
             branchCommand = branchCommand.replace("{pallet_name}", extra);
             // custom output file name so that pallets with path don't cause issues
