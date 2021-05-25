@@ -142,7 +142,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
         branchCommand: [
             'cargo run --release',
             '--features=runtime-benchmarks',
-            '--manifest-path=bin/node/cli/Cargo.toml',
+            '--bin parallel-dev',
             '--',
             'benchmark',
             '--chain=dev',
@@ -162,7 +162,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
         branchCommand: [
             'cargo run --release',
             '--features=runtime-benchmarks',
-            '--manifest-path=bin/node/cli/Cargo.toml',
+            '--bin parallel-dev',
             '--',
             'benchmark',
             '--chain=dev',
@@ -302,7 +302,7 @@ async function benchmarkRuntime(app, config) {
         let command = config.extra.split(" ")[0];
 
         var benchConfig;
-        if (config.repo == "substrate") {
+        if (config.repo == "parallel") {
             benchConfig = SubstrateRuntimeBenchmarkConfigs[command];
         } else if (config.repo == "polkadot") {
             benchConfig = PolkadotRuntimeBenchmarkConfigs[command];
