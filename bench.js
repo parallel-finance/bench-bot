@@ -61,6 +61,8 @@ var BenchConfigs = {
     }
 }
 
+
+
 const prepareBranch = function(
   {
     contributor,
@@ -73,59 +75,30 @@ const prepareBranch = function(
     benchContext
   }
 ) {
-
-//   benchContext.runTask("curl https://sh.rustup.rs -sSf | sh -s -- -y");
-//   benchContext.runTask("source $HOME/.cargo/env");
-//   var { error, stdout } = benchContext.runTask("cargo --version");
-//   console.log(stdout);
-//    if (error) {
-//    app.log("cargo --version");
-//    }
-
   shell.mkdir("git")
   shell.cd(cwd + "/git")
-  console.log(`Cloning git repository is "git clone https://github.com/${owner}/${repo}"`);
-var { error, stderr } = benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
-  if (error) {
-              app.log("Git clone failed, probably directory exists...");
-          }
+  benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
   shell.cd(cwd + `/git/${repo}`);
 
   var { error, stdout } = benchContext.runTask("git rev-parse HEAD");
-  if (error) {
-  app.log("git rev-parse HEAD failed");
-    return errorResult(stderr);
-  }
+  if (error) return errorResult(stderr);
   const detachedHead = stdout.trim()
-
-   shell.cd(cwd + `/git/${repo}`);
 
   // Check out to the detached head so that any branch can be deleted
   var { error, stderr } = benchContext.runTask(`git checkout ${detachedHead}`);
-  if (error) {
-    app.log("git checkout ${detachedHead} failed");
-    return errorResult(stderr);
-  }
+  if (error) return errorResult(stderr);
 
- shell.cd(cwd + `/git/${repo}`);
-  console.log(`git remote remove pr`);
   // Recreate PR remote
- benchContext.runTask(`git remote remove pr`);
-
-   console.log(`git remote add pr "https://github.com/${contributor}/${repo}.git"`);
+  benchContext.runTask(`git remote remove pr`);
   var { error, stderr } = benchContext.runTask(`git remote add pr https://github.com/${contributor}/${repo}.git`);
-  if (error) {
-  app.log("git remote add pr failed");
-  return errorResult(stderr);
-  }
- console.log(`git branch -D ${branch}`);
+  if (error) return errorResult(stderr);
+
   // Fetch and recreate the PR's branch
   benchContext.runTask(`git branch -D ${branch}`);
   var { error, stderr } = benchContext.runTask(`git fetch pr ${branch} && git checkout --track pr/${branch}`, `Checking out ${branch}...`);
   if (error) return errorResult(stderr);
 
   // Fetch and merge master
-  console.log(`git pull origin ${baseBranch}`);
   var { error, stderr } = benchContext.runTask(`git pull origin ${baseBranch}`, `Merging branch ${baseBranch}`);
   if (error) return errorResult(stderr);
 }
