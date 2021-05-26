@@ -143,7 +143,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
     "pallet": {
         title: "Benchmark Runtime Pallet",
         branchCommand: [
-            'cargo run --release',
+            '/home/alex_cj96/.cargo/bin/cargo run --release',
             '--features=runtime-benchmarks',
             '--bin parallel-dev',
             '--',
@@ -163,7 +163,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
     "substrate": {
         title: "Benchmark Runtime Substrate Pallet",
         branchCommand: [
-            'cargo run --release',
+            '/home/alex_cj96/.cargo/bin/cargo run --release',
             '--features=runtime-benchmarks',
             '--bin parallel-dev',
             '--',
