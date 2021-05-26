@@ -74,13 +74,13 @@ const prepareBranch = function(
   }
 ) {
 
-   benchContext.runTask("curl https://sh.rustup.rs -sSf | sh -s -- -y");
-   benchContext.runTask("source $HOME/.cargo/env");
-   var { error, stdout } = benchContext.runTask("cargo --version");
-   console.log(stdout);
-    if (error) {
-    app.log("cargo --version");
-    }
+//   benchContext.runTask("curl https://sh.rustup.rs -sSf | sh -s -- -y");
+//   benchContext.runTask("source $HOME/.cargo/env");
+//   var { error, stdout } = benchContext.runTask("cargo --version");
+//   console.log(stdout);
+//    if (error) {
+//    app.log("cargo --version");
+//    }
 
   shell.mkdir("git")
   shell.cd(cwd + "/git")
@@ -375,16 +375,16 @@ async function benchmarkRuntime(app, config) {
 
         var error = prepareBranch(config, { benchContext })
         if (error) return error
-        console.log(`branchCommand is  "${branchCommand}"`);
-         console.log(`repo is "${config.repo}"`);
+//        console.log(`branchCommand is  "${branchCommand}"`);
+//         console.log(`repo is "${config.repo}"`);
 
-        //shell.cd(cwd + `/git/${config.repo}`);
+        //shell.cd(cwd + `/       if (error) {
+                           //           app.log("Benching failed.........");
+                           //           return errorResult(stderr);
+                           //         }git/${config.repo}`);
         var { error, stdout, stderr } = benchContext.runTask(branchCommand, `Benching branch: ${config.branch}...`);
 
-       if (error) {
-           app.log("Benching failed.........");
-           return errorResult(stderr);
-         }
+//
         // If `--output` is set, we commit the benchmark file to the repo
         if (output) {
             const regex = /--output(?:=|\s+)(".+?"|\S+)/;
