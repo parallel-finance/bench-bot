@@ -76,7 +76,7 @@ const prepareBranch = function(
   shell.mkdir("git")
   shell.cd(cwd + "/git")
   console.log(`Cloning git repository is "git clone https://github.com/${owner}/${repo}"`);
-  var { error } = benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
+var { error, stderr } = benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
   if (error) {
               app.log("Git clone failed, probably directory exists...");
           }
@@ -89,6 +89,8 @@ const prepareBranch = function(
   }
   const detachedHead = stdout.trim()
 
+   shell.cd(cwd + `/git/${repo}`);
+
   // Check out to the detached head so that any branch can be deleted
   var { error, stderr } = benchContext.runTask(`git checkout ${detachedHead}`);
   if (error) {
@@ -96,11 +98,20 @@ const prepareBranch = function(
     return errorResult(stderr);
   }
 
+ shell.cd(cwd + `/git/${repo}`);
   // Recreate PR remote
-  benchContext.runTask(`git remote remove pr`);
+    var { error, stderr } = benchContext.runTask(`git remote remove pr`, "Removing remote PR...");
+    if (error) {
+        app.log("Removing remote PR failed");
+        return errorResult(stderr);
+      }
+
    console.log(`git remote add pr "https://github.com/${contributor}/${repo}.git"`);
   var { error, stderr } = benchContext.runTask(`git remote add pr https://github.com/${contributor}/${repo}.git`);
-  if (error) return errorResult(stderr);
+  if (error) {
+  app.log("git remote add pr failed");
+  return errorResult(stderr);
+  }
  console.log(`git branch -D ${branch}`);
   // Fetch and recreate the PR's branch
   benchContext.runTask(`git branch -D ${branch}`);
