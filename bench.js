@@ -366,8 +366,8 @@ async function benchmarkRuntime(app, config) {
 
         var error = prepareBranch(config, { benchContext })
         if (error) return error
-        console.log(`branchCommand is  "${branchCommand}."`);
-         console.log(`Benching branch is "${config.branch}."`);
+        console.log(`branchCommand is  "${branchCommand}"`);
+         console.log(`repo is "${config.repo}"`);
 
         shell.cd(cwd + `/git/${config.repo}`);
         var { error, stdout, stderr } = benchContext.runTask(branchCommand, `Benching branch: ${config.branch}...`);
