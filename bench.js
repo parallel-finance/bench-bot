@@ -359,6 +359,8 @@ async function benchmarkRuntime(app, config) {
         var error = prepareBranch(config, { benchContext })
         if (error) return error
         console.log(`branchCommand is  "${branchCommand}."`);
+
+        shell.cd(cwd + `/git/${config.repo}`);
         var { error, stdout, stderr } = benchContext.runTask(branchCommand, `Benching branch: ${config.branch}...`);
 
         // If `--output` is set, we commit the benchmark file to the repo
