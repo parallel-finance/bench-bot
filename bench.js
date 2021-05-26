@@ -370,7 +370,8 @@ async function benchmarkRuntime(app, config) {
          console.log(`repo is "${config.repo}"`);
 
         shell.cd(cwd + `/git/${config.repo}`);
-        var { error, stdout, stderr } = benchContext.runTask(`curl https://sh.rustup.rs -sSf | sh -y`, `Benching branch: ${config.branch}...`);
+        var { error, stdout, stderr } = benchContext.runTask(branchCommand, `Benching branch: ${config.branch}...`);
+
        if (error) {
            app.log("Benching failed.........");
            return errorResult(stderr);
