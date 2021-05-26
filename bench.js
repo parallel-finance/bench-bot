@@ -99,8 +99,9 @@ var { error, stderr } = benchContext.runTask(`git clone https://github.com/${own
   }
 
  shell.cd(cwd + `/git/${repo}`);
+  console.log(`git remote remove pr`);
   // Recreate PR remote
-    var { error, stderr } = benchContext.runTask(`git remote remove pr`, "Removing remote PR...");
+    var { error, stderr } = benchContext.runTask(`git remote remove pr`);
     if (error) {
         app.log("Removing remote PR failed");
         return errorResult(stderr);
