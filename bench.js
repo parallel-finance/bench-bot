@@ -75,17 +75,26 @@ const prepareBranch = function(
 ) {
   shell.mkdir("git")
   shell.cd(cwd + "/git")
- console.log(`Cloning git repository is "git clone https://github.com/${owner}/${repo}"`);
-  benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
-  shell.cd(cwd + `/git/${repo}`);
+  console.log(`Cloning git repository is "git clone https://github.com/${owner}/${repo}"`);
+  var { error } = benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
+  if (error) {
+              app.log("Git clone failed, probably directory exists...");
+          }
+  shell.cd(cwd + `/${repo}`);
 
   var { error, stdout } = benchContext.runTask("git rev-parse HEAD");
-  if (error) return errorResult(stderr);
+  if (error) {
+  app.log("git rev-parse HEAD failed");
+    return errorResult(stderr);
+  }
   const detachedHead = stdout.trim()
 
   // Check out to the detached head so that any branch can be deleted
   var { error, stderr } = benchContext.runTask(`git checkout ${detachedHead}`);
-  if (error) return errorResult(stderr);
+  if (error) {
+    app.log("git checkout ${detachedHead} failed");
+    return errorResult(stderr);
+  }
 
   // Recreate PR remote
   benchContext.runTask(`git remote remove pr`);
@@ -349,7 +358,7 @@ async function benchmarkRuntime(app, config) {
 
         var error = prepareBranch(config, { benchContext })
         if (error) return error
-
+        console.log(`branchCommand is  "${branchCommand}."`);
         var { error, stdout, stderr } = benchContext.runTask(branchCommand, `Benching branch: ${config.branch}...`);
 
         // If `--output` is set, we commit the benchmark file to the repo
