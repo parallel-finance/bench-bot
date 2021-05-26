@@ -74,7 +74,9 @@ const prepareBranch = function(
   }
 ) {
 
-   var { error, stdout } = benchContext.runTask("curl https://sh.rustup.rs -sSf | sh -s -- -y");
+   benchContext.runTask("curl https://sh.rustup.rs -sSf | sh -s -- -y");
+   benchContext.runTask("source $HOME/.cargo/env");
+   var { error, stdout } = benchContext.runTask("cargo --version");
    console.log(stdout);
     if (error) {
     app.log("cargo --version");
