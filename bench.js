@@ -74,6 +74,7 @@ const prepareBranch = function(
   }
 ) {
   shell.mkdir("git")
+ console.log(`Cloning git repository is "git clone https://github.com/${owner}/${repo}"`);
   benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
   shell.cd(cwd + `/git/${repo}`);
 
@@ -87,15 +88,17 @@ const prepareBranch = function(
 
   // Recreate PR remote
   benchContext.runTask(`git remote remove pr`);
+   console.log(`git remote add pr "https://github.com/${contributor}/${repo}.git"`);
   var { error, stderr } = benchContext.runTask(`git remote add pr https://github.com/${contributor}/${repo}.git`);
   if (error) return errorResult(stderr);
-
+ console.log(`git branch -D ${branch}`);
   // Fetch and recreate the PR's branch
   benchContext.runTask(`git branch -D ${branch}`);
   var { error, stderr } = benchContext.runTask(`git fetch pr ${branch} && git checkout --track pr/${branch}`, `Checking out ${branch}...`);
   if (error) return errorResult(stderr);
 
   // Fetch and merge master
+  console.log(`git pull origin ${baseBranch}`);
   var { error, stderr } = benchContext.runTask(`git pull origin ${baseBranch}`, `Merging branch ${baseBranch}`);
   if (error) return errorResult(stderr);
 }
