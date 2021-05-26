@@ -74,6 +74,7 @@ const prepareBranch = function(
   }
 ) {
   shell.mkdir("git")
+  shell.cd(cwd + "/git")
  console.log(`Cloning git repository is "git clone https://github.com/${owner}/${repo}"`);
   benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
   shell.cd(cwd + `/git/${repo}`);
