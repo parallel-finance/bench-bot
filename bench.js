@@ -73,6 +73,13 @@ const prepareBranch = function(
     benchContext
   }
 ) {
+
+   var { error, stdout } = benchContext.runTask("cargo --version");
+   console.log(stdout);
+    if (error) {
+    app.log("cargo --version");
+    }
+
   shell.mkdir("git")
   shell.cd(cwd + "/git")
   console.log(`Cloning git repository is "git clone https://github.com/${owner}/${repo}"`);
@@ -369,7 +376,7 @@ async function benchmarkRuntime(app, config) {
         console.log(`branchCommand is  "${branchCommand}"`);
          console.log(`repo is "${config.repo}"`);
 
-        shell.cd(cwd + `/git/${config.repo}`);
+        //shell.cd(cwd + `/git/${config.repo}`);
         var { error, stdout, stderr } = benchContext.runTask(branchCommand, `Benching branch: ${config.branch}...`);
 
        if (error) {
