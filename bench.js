@@ -80,7 +80,7 @@ const prepareBranch = function(
   if (error) {
               app.log("Git clone failed, probably directory exists...");
           }
-  shell.cd(cwd + `/${repo}`);
+  shell.cd(cwd + `/git/${repo}`);
 
   var { error, stdout } = benchContext.runTask("git rev-parse HEAD");
   if (error) {
