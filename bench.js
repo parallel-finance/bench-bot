@@ -61,8 +61,6 @@ var BenchConfigs = {
     }
 }
 
-
-
 const prepareBranch = function(
   {
     contributor,
