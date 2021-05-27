@@ -143,7 +143,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
     "pallet": {
         title: "Benchmark Runtime Pallet",
         branchCommand: [
-            '/home/alex_cj96/.cargo/bin/cargo run --release',
+            'cargo run --release',
             '--features=runtime-benchmarks',
             '--bin parallel-dev',
             '--',
@@ -163,7 +163,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
     "substrate": {
         title: "Benchmark Runtime Substrate Pallet",
         branchCommand: [
-            '/home/alex_cj96/.cargo/bin/cargo run --release',
+            'cargo run --release',
             '--features=runtime-benchmarks',
             '--bin parallel-dev',
             '--',
@@ -325,6 +325,7 @@ async function benchmarkRuntime(app, config) {
             // extra here should just be raw arguments to add to the command
             branchCommand += " " + extra;
         } else {
+            branchCommand = branchCommand.replace("cargo", config.cargo);
             // extra here should be the name of a pallet
             branchCommand = branchCommand.replace("{pallet_name}", extra);
             // custom output file name so that pallets with path don't cause issues
