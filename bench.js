@@ -75,7 +75,7 @@ const prepareBranch = function(
 ) {
   shell.mkdir("git")
   shell.cd(cwd + "/git")
-  benchContext.runTask(`git clone https://github.com/${owner}/${repo}`, "Cloning git repository...");
+  benchContext.runTask(`git clone --recursive https://github.com/${owner}/${repo}`, "Cloning git repository...");
   shell.cd(cwd + `/git/${repo}`);
 
   var { error, stdout } = benchContext.runTask("git rev-parse HEAD");
