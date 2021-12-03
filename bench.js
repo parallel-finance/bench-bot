@@ -146,7 +146,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--bin parallel',
             '--',
             'benchmark',
-            '--chain=parallel',
+            '--chain=vanilla-dev',
             '--steps=50',
             '--repeat=20',
             '--pallet={pallet_name}',
@@ -158,7 +158,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--template=./.maintain/frame-weight-template.hbs',
         ].join(' '),
     },
-    "substrate": {
+    "vanilla": {
         title: "Benchmark Runtime Substrate Pallet",
         branchCommand: [
             'cargo run --release',
@@ -166,7 +166,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--bin parallel',
             '--',
             'benchmark',
-            '--chain=parallel',
+            '--chain=vanilla-dev',
             '--steps=50',
             '--repeat=20',
             '--pallet={pallet_name}',
@@ -174,7 +174,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--execution=wasm',
             '--wasm-execution=compiled',
             '--heap-pages=4096',
-            '--output=./pallets/{pallet_folder}/src/weights.rs',
+            '--output=./runtime/vanilla/src/weights/{pallet_folder}.rs',
             '--template=./.maintain/frame-weight-template.hbs',
         ].join(' '),
     },
