@@ -154,7 +154,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--execution=wasm',
             '--wasm-execution=compiled',
             '--heap-pages=4096',
-            '--output=./pallets/{pallet_name}/src/weights.rs',
+            '--output=./runtime/vanilla/src/weights/{pallet_folder}.rs',
         ].join(' '),
     },
     "vanilla": {
@@ -173,7 +173,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--execution=wasm',
             '--wasm-execution=compiled',
             '--heap-pages=4096',
-            '--output=./runtime/vanilla/src/weights/{pallet_name}.rs',
+            '--output=./runtime/vanilla/src/weights/{pallet_folder}.rs',
         ].join(' '),
     },
     "parallel": {
@@ -192,7 +192,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--execution=wasm',
             '--wasm-execution=compiled',
             '--heap-pages=4096',
-            '--output=./runtime/vanilla/src/weights/{pallet_name}.rs',
+            '--output=./runtime/parallel/src/weights/{pallet_folder}.rs',
         ].join(' '),
     },
     "heiko": {
@@ -211,7 +211,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--execution=wasm',
             '--wasm-execution=compiled',
             '--heap-pages=4096',
-            '--output=./runtime/vanilla/src/weights/{pallet_name}.rs',
+            '--output=./runtime/heiko/src/weights/{pallet_folder}.rs',
         ].join(' '),
     },
     "kerria": {
@@ -230,7 +230,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--execution=wasm',
             '--wasm-execution=compiled',
             '--heap-pages=4096',
-            '--output=./runtime/vanilla/src/weights/{pallet_name}.rs',
+            '--output=./runtime/kerria/src/weights/{pallet_folder}.rs',
         ].join(' '),
     },
     "custom": {
