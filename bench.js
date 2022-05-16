@@ -146,7 +146,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--',
             'benchmark',
             'pallet',
-            '--chain=vanilla-dev',
+            '--chain=parallel-dev',
             '--steps=50',
             '--repeat=20',
             '--pallet={pallet_name}',
@@ -154,7 +154,7 @@ var SubstrateRuntimeBenchmarkConfigs = {
             '--execution=wasm',
             '--wasm-execution=compiled',
             '--heap-pages=4096',
-            '--output=./runtime/vanilla/src/weights/pallet_{pallet_folder}.rs',
+            '--output=./pallets/{pallet_folder}/src/weights.rs',
         ].join(' '),
     },
     "vanilla": {
