@@ -423,7 +423,7 @@ async function benchmarkRuntime(app, config) {
         }
         let report = `Benchmark: **${benchConfig.title}**\n\n`
             + branchCommand
-            + "\n\n<details>\n<summary>Results</summary>\n\n"
+            + "\n\n<details>\n<summary>&#10132; Results</summary>\n\n"
             + (stdout ? stdout : stderr)
             + "\n\n </details>";
 
